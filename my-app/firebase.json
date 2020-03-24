@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "target": "minimized",
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}
