@@ -1,12 +1,12 @@
 import React, { useState, Fragment } from "react";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import { getPosterById } from "../db.js";
+import HintButton from "./HintButton"
 
 function View(props) {
   const { id, onClickConfirm, onClickPass } = props;
@@ -44,7 +44,7 @@ function View(props) {
       </Row>
       <Row>
         <Col className="text-center">
-          <Button variant="outline-warning">힌트</Button>
+          <HintButton variant="outline-warning" hintArr={poster.hint}>힌트</HintButton>
           <Button
             onClick={() => {
               onClickConfirm(answer);
