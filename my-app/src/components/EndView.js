@@ -3,8 +3,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
+import firebase from "../firebase/firebase.warpper";
+
 const EndView = props => {
   const { score } = props;
+
+  const shareScore = () => {
+    firebase.sendLog({ type: "share" });
+  };
 
   return (
     <>
@@ -15,7 +21,7 @@ const EndView = props => {
       </Row>
       <Row>
         <Col className="text-center">
-          <Button>공유하기</Button>
+          <Button onClick={shareScore}>공유하기</Button>
         </Col>
       </Row>
     </>

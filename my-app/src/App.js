@@ -8,6 +8,26 @@ import ScoreAlert from "./components/ScoreAlert";
 import EndView from "./components/EndView";
 
 import { getPosterLength } from "./db";
+import firebase from "./firebase/firebase.warpper";
+
+firebase
+  .getLocalIP()
+  .then(ip => {
+    window.localStorage.setItem("ip", ip);
+    window.localStorage.setItem("browser", firebase.getBrowser());
+  })
+  .catch(error => {
+    let ip = "";
+    let characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < characters.length; i++) {
+      ip += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    window.localStorage.setItem("ip", ip);
+    window.localStorage.setItem("browser", firebase.getBrowser());
+  });
 
 function App() {
   const [idOnView, setIdOnView] = useState(0);
@@ -25,21 +45,27 @@ function App() {
   };
 
   const onClickConfirm = answer => {
+    let isCorrect = false;
     if (
       answer.replace(/\s/g, "") ===
       getPosterById(idOnView).name.replace(/\s/g, "")
     ) {
-      setCorrect(true);
+      isCorrect = true;
       setScore(score + 1);
-    } else {
-      setCorrect(false);
     }
 
+    setCorrect(isCorrect);
     setShow(true);
     checkAndSetNextIdOnView();
+
+    firebase.sendLog({
+      type: "quest",
+      step: idOnView,
+      correct: isCorrect
+    });
   };
 
-  const onClickPass = () => {
+  const onClickPass = async () => {
     checkAndSetNextIdOnView();
   };
 
