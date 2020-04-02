@@ -5,6 +5,7 @@ import View from "./components/View";
 import Container from "react-bootstrap/Container";
 import ScoreBoard from "./components/ScoreBoard";
 import ScoreAlert from "./components/ScoreAlert";
+import EndView from "./components/EndView";
 
 import { getPosterLength } from "./db";
 
@@ -12,13 +13,13 @@ function App() {
   const [idOnView, setIdOnView] = useState(0);
   const [score, setScore] = useState(0);
   const [show, setShow] = useState(false);
-  const [correct, setCorrect] = useState("success")
+  const [correct, setCorrect] = useState("success");
+  const [showEndPage, setShowEndPage] = useState(false);
 
   const checkAndSetNextIdOnView = () => {
     if (idOnView + 1 >= getPosterLength()) {
-      alert("끝");
+      setShowEndPage(true);
     } else {
-
       setIdOnView(idOnView + 1);
     }
   };
@@ -28,7 +29,6 @@ function App() {
       answer.replace(/\s/g, "") ===
       getPosterById(idOnView).name.replace(/\s/g, "")
     ) {
-
       setCorrect(true);
       setScore(score + 1);
     } else {
@@ -46,18 +46,31 @@ function App() {
   return (
     <>
       <Container style={{ width: 300 }}>
-        <ScoreBoard total={getPosterLength()} score={score} index={idOnView + 1} />
-        <View
-          id={idOnView}
-          onClickPass={onClickPass}
-          onClickConfirm={onClickConfirm}
-        />
-
+        {showEndPage ? (
+          <EndView score={score} />
+        ) : (
+          <>
+            <ScoreBoard
+              total={getPosterLength()}
+              score={score}
+              index={idOnView + 1}
+            />
+            <View
+              id={idOnView}
+              onClickPass={onClickPass}
+              onClickConfirm={onClickConfirm}
+            />
+          </>
+        )}
       </Container>
-      <ScoreAlert setShow={setShow} show={show} correct={correct} style={{ zIndex: 100, position: "fixed", top: 30 }} />
+      <ScoreAlert
+        setShow={setShow}
+        show={show}
+        correct={correct}
+        style={{ zIndex: 100, position: "fixed", top: 30 }}
+      />
     </>
-
-  )
+  );
 }
 
 export default App;
