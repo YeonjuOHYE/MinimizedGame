@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { getPosterById } from "./db.js";
+import React, { useState, useEffect } from "react";
+import { getPosterById, poster, posters } from "./db.js";
 
 import View from "./components/View";
 import Container from "react-bootstrap/Container";
@@ -8,15 +8,15 @@ import ScoreAlert from "./components/ScoreAlert";
 import EndView from "./components/EndView";
 
 import { getPosterLength } from "./db";
-import firebase from "./firebase/firebase.warpper";
+import firebase from "./firebase/firebase.wrapper";
 
 firebase
   .getLocalIP()
-  .then(ip => {
+  .then((ip) => {
     window.localStorage.setItem("ip", ip);
     window.localStorage.setItem("browser", firebase.getBrowser());
   })
-  .catch(error => {
+  .catch((error) => {
     let ip = "";
     let characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -36,6 +36,12 @@ function App() {
   const [correct, setCorrect] = useState("success");
   const [showEndPage, setShowEndPage] = useState(false);
 
+  useEffect(() => {
+    posters.forEach((poster) => {
+      new Image().src = poster.path;
+    });
+  }, []);
+
   const checkAndSetNextIdOnView = () => {
     if (idOnView + 1 >= getPosterLength()) {
       setShowEndPage(true);
@@ -44,7 +50,7 @@ function App() {
     }
   };
 
-  const onClickConfirm = answer => {
+  const onClickConfirm = (answer) => {
     let isCorrect = false;
     if (
       answer.replace(/\s/g, "") ===
@@ -58,11 +64,11 @@ function App() {
     setShow(true);
     checkAndSetNextIdOnView();
 
-    firebase.sendLog({
-      type: "quest",
-      step: idOnView,
-      correct: isCorrect
-    });
+    // firebase.sendLog({
+    //   type: "quest",
+    //   step: idOnView,
+    //   correct: isCorrect,
+    // });
   };
 
   const onClickPass = async () => {

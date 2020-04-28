@@ -5,8 +5,8 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import { getPosterById } from "../db.js";
-import HintButton from "./HintButton"
+import { getPosterById, poster } from "../db.js";
+import HintButton from "./HintButton";
 
 function View(props) {
   const { id, onClickConfirm, onClickPass } = props;
@@ -17,7 +17,7 @@ function View(props) {
     <Fragment>
       <Row>
         <Col>
-          <Image src={poster.path} fluid />
+          <Image key={poster.path} src={poster.path} fluid />
         </Col>
       </Row>
       <Row>
@@ -44,7 +44,9 @@ function View(props) {
       </Row>
       <Row>
         <Col className="text-center">
-          <HintButton variant="outline-warning" hintArr={poster.hint}>힌트</HintButton>
+          <HintButton variant="outline-warning" hintArr={poster.hint}>
+            힌트
+          </HintButton>
           <Button
             onClick={() => {
               onClickConfirm(answer);
