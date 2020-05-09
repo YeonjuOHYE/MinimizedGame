@@ -7,13 +7,22 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
+    "classie": "^1.0.0",
+    "css-loader": "^0.28.7",
+    "customize-cra": "^0.9.1",
+    "dynamics.js": "^1.1.5",
+    "generate": "^0.14.0",
+    "modernizr": "^3.11.0",
+    "modernizr-webpack-plugin": "^1.0.7",
     "react": "^16.13.1",
+    "react-app-rewired": "^2.1.5",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "webpack-modernizr-loader": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -8,6 +8,7 @@ import ScoreAlert from "./components/ScoreAlert";
 import EndView from "./components/EndView";
 
 import { getPosterLength } from "./db";
+import CradStack from "./components/CardStack";
 
 function App() {
   const [idOnView, setIdOnView] = useState(0);
@@ -24,7 +25,7 @@ function App() {
     }
   };
 
-  const onClickConfirm = answer => {
+  const onClickConfirm = (answer) => {
     if (
       answer.replace(/\s/g, "") ===
       getPosterById(idOnView).name.replace(/\s/g, "")
@@ -43,33 +44,42 @@ function App() {
     checkAndSetNextIdOnView();
   };
 
+  // return (
+  //   <>
+  //     <Container style={{ width: 300 }}>
+  //       {showEndPage ? (
+  //         <EndView score={score} />
+  //       ) : (
+  //         <>
+  //           <ScoreBoard
+  //             total={getPosterLength()}
+  //             score={score}
+  //             index={idOnView + 1}
+  //           />
+  //           <View
+  //             id={idOnView}
+  //             onClickPass={onClickPass}
+  //             onClickConfirm={onClickConfirm}
+  //           />
+  //         </>
+  //       )}
+  //     </Container>
+  //     <ScoreAlert
+  //       setShow={setShow}
+  //       show={show}
+  //       correct={correct}
+  //       style={{ zIndex: 100, position: "fixed", top: 30 }}
+  //     />
+  //   </>
+  // );
+
   return (
-    <>
-      <Container style={{ width: 300 }}>
-        {showEndPage ? (
-          <EndView score={score} />
-        ) : (
-          <>
-            <ScoreBoard
-              total={getPosterLength()}
-              score={score}
-              index={idOnView + 1}
-            />
-            <View
-              id={idOnView}
-              onClickPass={onClickPass}
-              onClickConfirm={onClickConfirm}
-            />
-          </>
-        )}
-      </Container>
-      <ScoreAlert
-        setShow={setShow}
-        show={show}
-        correct={correct}
-        style={{ zIndex: 100, position: "fixed", top: 30 }}
+    <div style={{ marginTop: 10 }}>
+      <CradStack
+        effect="krisna"
+        imgs={[getPosterById(0).path, getPosterById(1).path]}
       />
-    </>
+    </div>
   );
 }
 
